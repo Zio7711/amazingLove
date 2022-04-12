@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import MainScreen from './src/screens/MainScreen';
 import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      {/* <Text>Open up App.js to start working on your app!</Text> */}
-      <Text>Anais is pretty</Text>
       <StatusBar style='auto' />
+      <MainScreen />
     </View>
   );
 }
