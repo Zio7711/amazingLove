@@ -15,13 +15,13 @@ const MainScreenIconList = () => {
         name='gamepad-variant'
         size={40}
         color={'black'}
-        title={'Mini Games'}
+        title={'Games'}
       />
       <MainScreenIconItem
         name='message-text'
         size={40}
         color={'black'}
-        title={'Message'}
+        title={'Chat'}
       />
       <MainScreenIconItem
         name='book-open-variant'
@@ -33,7 +33,7 @@ const MainScreenIconList = () => {
         name='account'
         size={40}
         color={'black'}
-        title={'My Account'}
+        title={'Me'}
       />
     </View>
   );
@@ -42,6 +42,7 @@ const MainScreenIconList = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    marginBottom: 50,
   },
 });
 export default MainScreenIconList;

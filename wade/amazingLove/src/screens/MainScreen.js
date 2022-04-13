@@ -1,10 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, ImageBackground, StyleSheet, Text, View } from 'react-native';
 
-import MainScreenIconList from '../components/MainScreenIconList';
+import MainScreenCenter from '../components/mainScreenComponents/MainScreenCenter';
+import MainScreenIconList from '../components/mainScreenComponents/MainScreenIconList';
+import ScreenContainer from '../components/ScreenContainer';
 
 const MainScreen = () => {
   return (
     <View style={styles.container}>
+      <MainScreenCenter />
       <MainScreenIconList />
     </View>
   );
@@ -13,7 +16,6 @@ const MainScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
     paddingBottom: 50,
   },
 });
