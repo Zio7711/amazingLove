@@ -26,7 +26,7 @@ const MapComponent = () => {
 };
 const styles = StyleSheet.create({
   map: {
-    height: '100%',
+    height: '170%',
     alignItems: 'stretch',
   },
 });

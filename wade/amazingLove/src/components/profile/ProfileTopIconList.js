@@ -8,11 +8,10 @@ import colors from '../../../config/colors';
 
 const ProfileTopIconList = () => {
   const iconList = [
-    { title: 'Home', name: 'home-account' },
-    { title: 'Games', name: 'gamepad-variant' },
-    { title: 'Chat', name: 'message-text' },
-    { title: 'Dairies', name: 'book-open-variant' },
-    { title: 'me', name: 'account' },
+    { title: 'Gift', name: 'gift' },
+    { title: 'Store', name: 'store' },
+    { title: 'Garnish', name: 'toolbox' },
+    { title: 'Rose', name: 'flower-poppy' },
   ];
 
   return (
@@ -36,6 +35,7 @@ const ProfileTopIconList = () => {
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'space-around',
     flexDirection: 'row',
     flexWrap: 'wrap',
   },

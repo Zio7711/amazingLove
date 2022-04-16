@@ -6,20 +6,26 @@ import moment from 'moment';
 import { secondsToDhms } from '../../utils/mainScreenHelper';
 
 const MainScreenCenter = () => {
+  //loving state in seconds
   const [lovingTime, setLovingTime] = useState(0);
 
   useEffect(() => {
+    //calculate loving time
     const currentTime = moment(new Date(Date.now()));
     const dateWeMet = moment('2021-10-19');
     const lovingTimeInSeconds = currentTime.diff(dateWeMet, 'seconds');
     setLovingTime(lovingTimeInSeconds);
 
+    //set interval to update loving time
     let everySecondInterval = setInterval(() => {
       setLovingTime((prev) => prev + 1);
     }, 1000);
+
+    // clear interval when component unmounts
     return () => clearInterval(everySecondInterval);
   }, []);
 
+  // convert seconds to dhms
   const displayLovingTime = secondsToDhms(lovingTime);
 
   return (

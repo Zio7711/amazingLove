@@ -1,16 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import AppScreen from '../AppScreen';
 import IconItem from '../IconItem';
 import colors from '../../../config/colors';
+import { useNavigation } from '@react-navigation/native';
 
-const MainScreenIconList = () => {
+const MainScreenIconList = (props) => {
+  const navigation = useNavigation();
+  // icons list for main screen
   const iconList = [
     { title: 'Home', name: 'home-account' },
     { title: 'Games', name: 'gamepad-variant' },
     { title: 'Chat', name: 'message-text' },
     { title: 'Dairies', name: 'book-open-variant' },
-    { title: 'me', name: 'account' },
+    { title: 'Map', name: 'map' },
   ];
 
   return (
@@ -23,6 +25,7 @@ const MainScreenIconList = () => {
           name={icon.name}
           iconColor={'black'}
           backgroundColor={colors.primary}
+          onPress={() => navigation.push(icon.title)}
         />
       ))}
     </View>
