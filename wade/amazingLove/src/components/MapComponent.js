@@ -18,23 +18,16 @@ const MapComponent = () => {
       ref={mapRef}
       style={styles.map}
       region={mapRegion}
-      showsUserLocation={true}
       showsMyLocationButton={true}
-      // provider={MapView.PROVIDER_GOOGLE}
-      // onUserLocationChange={(result) => {
-      //   setMapRegion({
-      //     ...mapRegion,
-      //     latitude: result.nativeEvent.coordinate.latitude,
-      //     longitude: result.nativeEvent.coordinate.longitude,
-      //   });
-      // }}
+      showsUserLocation={true}
+      mapPadding={{ bottom: 130 }}
     ></MapView>
   );
 };
 const styles = StyleSheet.create({
   map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: '100%',
+    alignItems: 'stretch',
   },
 });
 export default MapComponent;

@@ -24,10 +24,13 @@ const MainScreenCenter = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.name}>
-        Anais <MaterialCommunityIcons name='heart' size={24} color='red' /> Zio
-      </Text>
-      <Text style={styles.description}>{displayLovingTime}</Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.name}>
+          Anais <MaterialCommunityIcons name='heart' size={24} color='red' />{' '}
+          Zio
+        </Text>
+        <Text style={styles.description}>{displayLovingTime}</Text>
+      </View>
     </View>
   );
 };
@@ -35,9 +38,14 @@ const MainScreenCenter = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  textContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    top: 60,
+    right: 0,
   },
+
   name: {
     fontSize: 30,
   },
