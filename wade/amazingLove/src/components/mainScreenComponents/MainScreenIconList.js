@@ -1,40 +1,29 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import MainScreenIconItem from './MainScreenIconItem';
+import IconItem from '../IconItem';
+import colors from '../../../config/colors';
 
 const MainScreenIconList = () => {
+  const iconList = [
+    { title: 'Home', name: 'home-account' },
+    { title: 'Games', name: 'gamepad-variant' },
+    { title: 'Chat', name: 'message-text' },
+    { title: 'Dairies', name: 'book-open-variant' },
+    { title: 'me', name: 'account' },
+  ];
+
   return (
     <View style={styles.container}>
-      <MainScreenIconItem
-        name='home-account'
-        size={40}
-        color={'black'}
-        title={'Home'}
-      />
-      <MainScreenIconItem
-        name='gamepad-variant'
-        size={40}
-        color={'black'}
-        title={'Games'}
-      />
-      <MainScreenIconItem
-        name='message-text'
-        size={40}
-        color={'black'}
-        title={'Chat'}
-      />
-      <MainScreenIconItem
-        name='book-open-variant'
-        size={40}
-        color={'black'}
-        title={'Dairies'}
-      />
-      <MainScreenIconItem
-        name='account'
-        size={40}
-        color={'black'}
-        title={'Me'}
-      />
+      {iconList.map((icon, index) => (
+        <IconItem
+          title={icon.title}
+          key={index}
+          size={40}
+          name={icon.name}
+          iconColor={'black'}
+          backgroundColor={colors.primary}
+        />
+      ))}
     </View>
   );
 };
@@ -43,6 +32,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginBottom: 50,
+    flexWrap: 'wrap',
   },
 });
 export default MainScreenIconList;

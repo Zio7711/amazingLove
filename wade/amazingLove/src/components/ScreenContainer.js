@@ -7,7 +7,7 @@ const ScreenContainer = ({ children }) => {
   return (
     <SafeAreaView style={styles.container}>
       {children}
-      <StatusBar barStyle='yes' />
+      <StatusBar style='auto' />
     </SafeAreaView>
   );
 };

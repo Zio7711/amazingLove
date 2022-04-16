@@ -2,16 +2,25 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const MainScreenIconItem = ({ name, size, color, title, ...otherConfig }) => {
+const IconItem = ({
+  name,
+  size,
+  iconColor,
+  backgroundColor,
+  title,
+  textOnTop = false,
+  ...otherConfig
+}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor }]}>
+      {textOnTop && <Text style={styles.title}>{title}</Text>}
       <MaterialCommunityIcons
         name={name}
         size={size}
-        color={color}
+        color={iconColor}
         {...otherConfig}
       />
-      <Text style={styles.title}>{title}</Text>
+      {!textOnTop && <Text style={styles.title}>{title}</Text>}
     </View>
   );
 };
@@ -24,7 +33,6 @@ const styles = StyleSheet.create({
     margin: 5,
     height: 120,
     width: Dimensions.get('window').width / 6,
-    backgroundColor: '#FF6347',
     borderRadius: 15,
   },
 
@@ -33,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MainScreenIconItem;
+export default IconItem;

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   textContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    top: 60,
+    top: 110,
     right: 0,
   },
 
