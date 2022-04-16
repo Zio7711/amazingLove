@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import AppScreen from '../AppScreen';
 import IconItem from '../IconItem';
 import colors from '../../../config/colors';
 
@@ -31,6 +32,7 @@ const MainScreenIconList = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    justifyContent: 'flex-end',
     marginBottom: 50,
     flexWrap: 'wrap',
   },

@@ -2,14 +2,10 @@ import { Button, ImageBackground, StyleSheet, Text, View } from 'react-native';
 
 import MainScreenCenter from '../components/mainScreenComponents/MainScreenCenter';
 import MainScreenIconList from 'components/mainScreenComponents/MainScreenIconList';
-import ScreenContainer from '../components/ScreenContainer';
-
-('');
 
 const MainScreen = () => {
   return (
     <ImageBackground
-      // blurRadius={10}
       style={styles.background}
       source={require('assets/pics/background.jpg')}
     >

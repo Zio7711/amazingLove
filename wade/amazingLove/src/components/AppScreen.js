@@ -3,7 +3,7 @@ import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import React from 'react';
 
-const ScreenContainer = ({ children }) => {
+const AppScreen = ({ children }) => {
   return (
     <SafeAreaView style={styles.container}>
       {children}
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScreenContainer;
+export default AppScreen;

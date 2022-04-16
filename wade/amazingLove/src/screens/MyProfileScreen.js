@@ -1,12 +1,16 @@
 import { Text, View } from 'react-native';
 
+import AppScreen from '../components/AppScreen';
+import ProfileTopIconList from '../components/profile/ProfileTopIconList';
 import React from 'react';
 
 const MyProfileScreen = () => {
   return (
-    <View>
-      <Text>MyProfileScreen</Text>
-    </View>
+    <AppScreen>
+      <View>
+        <ProfileTopIconList />
+      </View>
+    </AppScreen>
   );
 };
 
