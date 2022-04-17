@@ -1,6 +1,6 @@
+import { AI_FIGURE, DRAW, USER_FIGURE } from '../Game/constants';
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { USER_FIGURE, AI_FIGURE, DRAW } from '../Game/constants';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default class Result extends Component {
   _getResultMessage() {

@@ -1,50 +1,24 @@
-import { Text, View } from 'react-native';
-
-import CommunityScreen from '../screens/CommunityScreen';
-import MainScreen from '../screens//MainScreen';
-import MainScreenNavigator from './MainScreenNavigator';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import MyProfileScreen from '../screens/MyProfileScreen';
+import AppTabNavigator from './AppTabNavigator';
+import ChatScreen from '../screens/ChatScreen';
+import MapScreen from '../screens/MapScreen';
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import TicTacToeScreen from '../screens/TicTacToeScreen';
+import { createStackNavigator } from '@react-navigation/stack';
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen
-        name='Us'
-        component={MainScreenNavigator}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name='home' color={color} size={size} />
-          ),
-        }}
+    <Stack.Navigator>
+      <Stack.Screen
+        name='Main'
+        component={AppTabNavigator}
+        options={{ headerShown: false }}
       />
-      <Tab.Screen
-        name='Community'
-        component={CommunityScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name='google-circles-communities'
-              color={color}
-              size={size}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name='Profile'
-        component={MyProfileScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name='account' color={color} size={size} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+      <Stack.Screen name='Map' component={MapScreen} />
+      <Stack.Screen name='Tic Tac Toe' component={TicTacToeScreen} />
+      <Stack.Screen name='Chat' component={ChatScreen} />
+    </Stack.Navigator>
   );
 };
 

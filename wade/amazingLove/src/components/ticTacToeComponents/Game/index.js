@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import TicTacToe from 'tictactoe-agent';
-import Board from './Board';
-import { View } from 'react-native';
 import {
-  USER_FIGURE,
   AI_FIGURE,
-  EMPTY,
   DRAW,
+  EMPTY,
+  USER_FIGURE,
   VICTORY_CONDITIONS,
 } from './constants';
+import React, { Component } from 'react';
+
+import Board from './Board';
+import TicTacToe from 'tictactoe-agent';
+import { View } from 'react-native';
 
 export default class Game extends Component {
   constructor(props) {
@@ -16,10 +17,11 @@ export default class Game extends Component {
 
     this.state = {
       board: [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+      player: true,
     };
   }
 
-  _populateTile(index, figure, onFinish = f => f) {
+  _populateTile(index, figure, onFinish = (f) => f) {
     if (this.state.board[index] !== EMPTY) {
       return;
     }
@@ -39,7 +41,7 @@ export default class Game extends Component {
         }
 
         onFinish();
-      },
+      }
     );
   }
 
@@ -52,7 +54,7 @@ export default class Game extends Component {
   }
 
   _judgeWinner() {
-    if (!this.state.board.some(figure => figure === EMPTY)) {
+    if (!this.state.board.some((figure) => figure === EMPTY)) {
       return DRAW;
     }
 
@@ -60,7 +62,9 @@ export default class Game extends Component {
     for (let i = 0; i < VICTORY_CONDITIONS.length; ++i) {
       let figure = this.state.board[VICTORY_CONDITIONS[i][0]];
 
-      if (VICTORY_CONDITIONS[i].every(tile => this._checkTile(tile, figure))) {
+      if (
+        VICTORY_CONDITIONS[i].every((tile) => this._checkTile(tile, figure))
+      ) {
         winner = figure;
         break;
       }
@@ -81,8 +85,15 @@ export default class Game extends Component {
     });
   }
 
-  _handlePress = index => {
-    this._populateTile(index, USER_FIGURE, () => this._AIAct());
+  _handlePress = (index) => {
+    // this._populateTile(index, USER_FIGURE, () => this._AIAct());
+    const figure = this.state.player ? USER_FIGURE : AI_FIGURE;
+
+    this._populateTile(index, figure);
+    //set state player to false
+    this.setState({
+      player: !this.state.player,
+    });
   };
 
   render() {

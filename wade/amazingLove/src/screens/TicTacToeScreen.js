@@ -7,8 +7,8 @@ import Result from '../components/ticTacToeComponents/Result';
 const TicTacToeScreen = ({ navigation }) => {
   const [result, setResult] = useState(null);
 
-  handleGameFinish = (result) => {
-    setResult({ result });
+  handleGameFinish = (resultState) => {
+    setResult(resultState);
   };
 
   handleGameRestart = () => {
