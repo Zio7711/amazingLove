@@ -9,7 +9,7 @@ const MainScreenIconList = (props) => {
   // icons list for main screen
   const iconList = [
     { title: 'Home', name: 'home-account' },
-    { title: 'Games', name: 'gamepad-variant' },
+    { title: 'Tic Tac Toe', name: 'gamepad-variant' },
     { title: 'Chat', name: 'message-text' },
     { title: 'Dairies', name: 'book-open-variant' },
     { title: 'Map', name: 'map' },
