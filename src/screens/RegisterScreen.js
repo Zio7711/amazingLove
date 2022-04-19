@@ -11,7 +11,7 @@ import React, { useContext, useState } from 'react';
 import AppScreen from '../components/AppScreen';
 import AuthContext from '../../auth/context';
 import { StyleSheet } from 'react-native';
-import usersApi from '../../api/users';
+import usersApi from '../../api/usersApi';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required().label('Name'),

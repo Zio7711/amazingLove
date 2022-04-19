@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthContext from '../../auth/context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet } from 'react-native';
-import authApi from '../../api/auth';
+import authApi from '../../api/authApi';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
