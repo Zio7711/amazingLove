@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import { secondsToDhms } from '../../utils/mainScreenHelper';
+import useAuth from '../../../auth/useAuth';
+import userStorage from '../../utils/userStorage';
 
 const MainScreenCenter = () => {
   //loving state in seconds
   const [lovingTime, setLovingTime] = useState(0);
 
+  const { user } = useCallback(useAuth(), []);
+
   useEffect(() => {
     //calculate loving time
     const currentTime = moment(new Date(Date.now()));
+
     const dateWeMet = moment('2021-10-19');
     const lovingTimeInSeconds = currentTime.diff(dateWeMet, 'seconds');
     setLovingTime(lovingTimeInSeconds);
@@ -32,8 +37,9 @@ const MainScreenCenter = () => {
     <View style={styles.container}>
       <View style={styles.textContainer}>
         <Text style={styles.name}>
-          Anais <MaterialCommunityIcons name='heart' size={24} color='red' />{' '}
-          Zio
+          {user.name}
+          <MaterialCommunityIcons name='heart' size={24} color='red' />{' '}
+          {user.soulmate.name}
         </Text>
         <Text style={styles.description}>{displayLovingTime}</Text>
       </View>

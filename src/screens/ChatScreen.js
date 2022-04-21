@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 
 import Message from '../components/chatComponents/Message';
 import MessageInput from '../components/chatComponents/MessageInput';
-import chatRoomData from 'assets/dummy-data/Chats';
 import messageApi from '../../api/messageApi';
 
 export default function ChatRoomScreen() {
@@ -18,19 +17,24 @@ export default function ChatRoomScreen() {
     } catch (error) {
       console.log(error);
     }
-
-    // setMessages(response.data);
   };
 
   useEffect(() => {
     getMessages();
   }, []);
+
   console.log(messages);
+
+  // sort messages according to message.createdAt
+  const sortedMessages = messages?.sort(
+    (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+  );
 
   return (
     <SafeAreaView style={styles.page}>
       <FlatList
-        data={chatRoomData.messages}
+        keyExtractor={(messages) => messages._id}
+        data={messages}
         renderItem={({ item }) => <Message message={item} />}
         inverted
       />

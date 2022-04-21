@@ -1,25 +1,55 @@
-import { StyleSheet, Text, View } from 'react-native';
+// window.navigator.userAgent = 'react-native';
+
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
 
 import AppNavigator from './src/navigation/AppNavigator';
 import AuthContext from './auth/context';
+import LinkSoulmateScreen from './src/screens/LinkSoulmateScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import RegisterScreen from './src/screens/RegisterScreen';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useState } from 'react';
-
-const Stack = createNativeStackNavigator();
+import authApi from './api/authApi';
+import authStorage from './auth/authStorage';
+import { io } from 'socket.io-client/dist/socket.io';
 
 export default function App() {
   const [user, setUser] = useState(null);
 
+  const autoLoginFunction = async () => {
+    const token = await authStorage.getToken();
+    if (token) {
+      const result = await authApi.autoLogin();
+      if (!result.ok) return;
+      setUser(result.data.user);
+    }
+  };
+
+  const handleLogout = async () => {
+    await authStorage.removeToken();
+    setUser(null);
+  };
+
+  useEffect(() => {
+    autoLoginFunction();
+
+    const socket = io('http://192.168.0.183:5000', { jsonp: false });
+    socket.on('connect', () => {
+      console.log('connected');
+    });
+  }, []);
+
   return (
     <AuthContext.Provider value={{ user, setUser }}>
       <NavigationContainer>
-        <AppNavigator />
-        {/* <LoginScreen /> */}
-        {/* {user ? <AppNavigator /> : <LoginScreen />} */}
+        {!user ? (
+          <LoginScreen />
+        ) : user.soulmate ? (
+          <AppNavigator />
+        ) : (
+          <LinkSoulmateScreen />
+        )}
       </NavigationContainer>
+      {user?.soulmate && <Button title='Logout' onPress={handleLogout} />}
     </AuthContext.Provider>
   );
 }

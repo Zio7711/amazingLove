@@ -6,4 +6,6 @@ const userURL = {
 
 const register = (userInfo) => client.post(userURL.registerUser, userInfo);
 
-export default { register };
+const getUserById = (id) => client.get(`/user/${id}`);
+
+export default { register, getUserById };

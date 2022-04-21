@@ -6,6 +6,7 @@ import {
   SimpleLineIcons,
 } from '@expo/vector-icons';
 import {
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -14,20 +15,36 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+
+import messageApi from '../../../api/messageApi';
+import useAuth from '../../../auth/useAuth';
 
 const MessageInput = () => {
   const [message, setMessage] = useState('');
+  const { user } = useAuth();
+
+  const inputRef = useRef(null);
 
   const sendMessage = () => {
-    // send message
-    console.warn('sending: ', message);
+    const messageObj = {
+      content: message,
+      sender: user._id,
+      receiver: user.soulmate,
+    };
+
+    try {
+      // send message
+      messageApi.createMessage(messageObj);
+    } catch (error) {
+      console.warn('error sending message: ', error);
+    }
 
     setMessage('');
   };
 
   const onPlusClicked = () => {
-    console.warn('On plus clicked');
+    inputRef.current.focus();
   };
 
   const onPress = () => {
@@ -53,6 +70,7 @@ const MessageInput = () => {
         />
 
         <TextInput
+          ref={inputRef}
           style={styles.input}
           value={message}
           onChangeText={setMessage}

@@ -35,9 +35,9 @@ const apiClient = create({
 });
 
 apiClient.addAsyncRequestTransform(async (request) => {
-  // const authToken = await authStorage.getToken();
-  // if (!authToken) return;
-  request.headers['Authorization'] =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjVlNGI3ODE3YjdjZjU0MmQ1YTE0NmIiLCJpYXQiOjE2NTAzNzkyMDAsImV4cCI6MTY1MDQ2NTYwMH0.NMJCNyAVCY-PXkE6nM2oAil-vuB_xI3iT5-N88Pdbkk';
+  const authToken = await authStorage.getToken();
+  if (!authToken) return;
+  console.log('Bearer ' + authToken);
+  request.headers['Authorization'] = 'Bearer ' + authToken;
 });
 export default apiClient;

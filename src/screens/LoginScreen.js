@@ -14,6 +14,8 @@ import AuthContext from '../../auth/context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { StyleSheet } from 'react-native';
 import authApi from '../../api/authApi';
+import authStorage from '../../auth/authStorage';
+import useAuth from '../../auth/useAuth';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -23,7 +25,7 @@ const validationSchema = Yup.object().shape({
 const LoginScreen = () => {
   // const [loginFailed, setLoginFailed] = useState(false);
 
-  const { user, setUser } = useContext(AuthContext);
+  const { setUser } = useAuth();
 
   const [error, setError] = useState();
 
@@ -36,10 +38,7 @@ const LoginScreen = () => {
 
     // store user in AsyncStorage
     try {
-      await AsyncStorage.setItem('user', JSON.stringify(result.data.user));
-
-      // store token in AsyncStorage
-      await AsyncStorage.setItem('token', result.data.token);
+      await authStorage.storeToken(result.data.token);
     } catch (error) {
       console.log(error);
     }
