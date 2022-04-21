@@ -4,9 +4,18 @@ import React, { useEffect, useState } from 'react';
 import Message from '../components/chatComponents/Message';
 import MessageInput from '../components/chatComponents/MessageInput';
 import messageApi from '../../api/messageApi';
+import useSocket from '../hooks/useSocket';
 
 export default function ChatRoomScreen() {
   const [messages, setMessages] = useState(null);
+
+  const { socket } = useSocket();
+
+  socket.on('hello', (data) => {
+    console.log('hello', data);
+  });
+
+  socket.emit('message', 'from client message');
 
   // get messages from api
   const getMessages = async () => {
@@ -23,12 +32,10 @@ export default function ChatRoomScreen() {
     getMessages();
   }, []);
 
-  console.log(messages);
-
   // sort messages according to message.createdAt
-  const sortedMessages = messages?.sort(
-    (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-  );
+  // const sortedMessages = messages?.sort(
+  //   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  // );
 
   return (
     <SafeAreaView style={styles.page}>
@@ -38,7 +45,7 @@ export default function ChatRoomScreen() {
         renderItem={({ item }) => <Message message={item} />}
         inverted
       />
-      <MessageInput />
+      <MessageInput setMessages={setMessages} messages={messages} />
     </SafeAreaView>
   );
 }

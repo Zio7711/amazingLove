@@ -20,13 +20,13 @@ import React, { useRef, useState } from 'react';
 import messageApi from '../../../api/messageApi';
 import useAuth from '../../../auth/useAuth';
 
-const MessageInput = () => {
+const MessageInput = ({ setMessages, messages }) => {
   const [message, setMessage] = useState('');
   const { user } = useAuth();
 
   const inputRef = useRef(null);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     const messageObj = {
       content: message,
       sender: user._id,
@@ -35,7 +35,11 @@ const MessageInput = () => {
 
     try {
       // send message
-      messageApi.createMessage(messageObj);
+      const result = await messageApi.createMessage(messageObj);
+      if (!result.ok) return console.warn(result.data.message);
+
+      // update messages
+      setMessages([result.data.message, ...messages]);
     } catch (error) {
       console.warn('error sending message: ', error);
     }

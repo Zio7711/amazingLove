@@ -14,6 +14,7 @@ import { io } from 'socket.io-client/dist/socket.io';
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [socket, setSocket] = useState(null);
 
   const autoLoginFunction = async () => {
     const token = await authStorage.getToken();
@@ -32,14 +33,13 @@ export default function App() {
   useEffect(() => {
     autoLoginFunction();
 
-    const socket = io('http://192.168.0.183:5000', { jsonp: false });
-    socket.on('connect', () => {
-      console.log('connected');
-    });
+    const socketIo = io('http://192.168.0.183:5000', { jsonp: false });
+
+    setSocket(socketIo);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, socket }}>
       <NavigationContainer>
         {!user ? (
           <LoginScreen />

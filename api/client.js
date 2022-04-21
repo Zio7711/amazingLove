@@ -37,7 +37,7 @@ const apiClient = create({
 apiClient.addAsyncRequestTransform(async (request) => {
   const authToken = await authStorage.getToken();
   if (!authToken) return;
-  console.log('Bearer ' + authToken);
+  // console.log('Bearer ' + authToken);
   request.headers['Authorization'] = 'Bearer ' + authToken;
 });
 export default apiClient;
