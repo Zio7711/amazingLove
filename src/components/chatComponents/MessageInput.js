@@ -18,11 +18,14 @@ import {
 import React, { useRef, useState } from 'react';
 
 import messageApi from '../../../api/messageApi';
+import { throttle } from 'lodash';
 import useAuth from '../../../auth/useAuth';
+import useCouple from '../../hooks/useCouple';
 
-const MessageInput = ({ setMessages, messages }) => {
+const MessageInput = ({ setMessages, messages, socket }) => {
   const [message, setMessage] = useState('');
   const { user } = useAuth();
+  const { couple } = useCouple();
 
   const inputRef = useRef(null);
 
@@ -30,7 +33,8 @@ const MessageInput = ({ setMessages, messages }) => {
     const messageObj = {
       content: message,
       sender: user._id,
-      receiver: user.soulmate,
+      receiver: user.soulmate._id,
+      couple: couple._id,
     };
 
     try {
@@ -39,11 +43,13 @@ const MessageInput = ({ setMessages, messages }) => {
       if (!result.ok) return console.warn(result.data.message);
 
       // update messages
-      setMessages([result.data.message, ...messages]);
+      setMessages((messages) => [result.data.message, ...messages]);
+      await socket.emit('send_messages', result.data.message);
     } catch (error) {
       console.warn('error sending message: ', error);
     }
 
+    // clear message input
     setMessage('');
   };
 
@@ -89,7 +95,10 @@ const MessageInput = ({ setMessages, messages }) => {
           style={styles.icon}
         />
       </View>
-      <Pressable onPress={onPress} style={styles.buttonContainer}>
+      <Pressable
+        onPress={throttle(onPress, 2000, { trailing: false })}
+        style={styles.buttonContainer}
+      >
         {message ? (
           <Ionicons name='send' size={18} color='white' />
         ) : (

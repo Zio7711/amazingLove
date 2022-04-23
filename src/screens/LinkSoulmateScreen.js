@@ -19,11 +19,12 @@ const LinkSoulmateScreen = () => {
   const handleSubmit = async (formData) => {
     const result = await authApi.updateUser(formData);
     if (!result.ok) return alert(result.data.message);
-    setUser(result.data.user);
 
+    const soulmateUser = result.data.soulmateUser;
+    const updatedUser = { ...result.data.user, soulmate: soulmateUser };
+    setUser(updatedUser);
     try {
       await authStorage.storeToken(result.data.token);
-      const soulmateUser = result.data.soulmateUser;
     } catch (error) {
       console.log(error);
     }

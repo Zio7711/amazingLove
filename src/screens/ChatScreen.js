@@ -4,24 +4,29 @@ import React, { useEffect, useState } from 'react';
 import Message from '../components/chatComponents/Message';
 import MessageInput from '../components/chatComponents/MessageInput';
 import messageApi from '../../api/messageApi';
+import useCouple from '../hooks/useCouple';
 import useSocket from '../hooks/useSocket';
 
 export default function ChatRoomScreen() {
-  const [messages, setMessages] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   const { socket } = useSocket();
+  const { couple } = useCouple();
 
-  socket.on('hello', (data) => {
-    console.log('hello', data);
-  });
-
-  socket.emit('message', 'from client message');
+  useEffect(() => {
+    // socket join room
+    if (couple) {
+      socket.emit('join_room', couple._id);
+    }
+  }, [couple]);
 
   // get messages from api
   const getMessages = async () => {
     try {
-      const response = await messageApi.getMessageByUser();
+      // const response = await messageApi.getMessageByUser();
+      const response = await messageApi.getMessageByCoupleId(couple._id);
       if (!response.ok) return console.warn(response.data.message);
+
       setMessages(response.data.messages);
     } catch (error) {
       console.log(error);
@@ -29,8 +34,18 @@ export default function ChatRoomScreen() {
   };
 
   useEffect(() => {
-    getMessages();
-  }, []);
+    if (couple) getMessages();
+  }, [couple]);
+
+  useEffect(() => {
+    //set up event listener
+    socket.on('receive_messages', (data) => {
+      setMessages((messages) => [data, ...messages]);
+    });
+    return () => {
+      socket.removeListener('receive_messages');
+    };
+  }, [socket]);
 
   // sort messages according to message.createdAt
   // const sortedMessages = messages?.sort(
@@ -45,7 +60,11 @@ export default function ChatRoomScreen() {
         renderItem={({ item }) => <Message message={item} />}
         inverted
       />
-      <MessageInput setMessages={setMessages} messages={messages} />
+      <MessageInput
+        setMessages={setMessages}
+        messages={messages}
+        socket={socket}
+      />
     </SafeAreaView>
   );
 }

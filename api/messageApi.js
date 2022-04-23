@@ -8,6 +8,13 @@ const messageURL = {
 const createMessage = (messageInfo) =>
   client.post(messageURL.createMessage, messageInfo);
 
-const getMessageByUser = () => client.get(messageURL.getMessageByUser);
+// get Message by user not used yet
+// const getMessageByUser = () => client.get(messageURL.getMessageByUser);
 
-export default { createMessage, getMessageByUser };
+const getMessageByCoupleId = (coupleId) => client.get(`/message/${coupleId}`);
+
+export default {
+  createMessage,
+  // getMessageByUser,
+  getMessageByCoupleId,
+};
