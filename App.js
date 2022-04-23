@@ -12,12 +12,13 @@ import authApi from './api/authApi';
 import authStorage from './auth/authStorage';
 import coupleApi from './api/coupleApi';
 import { io } from 'socket.io-client/dist/socket.io';
+import useApi from './src/hooks/useApi';
 
 export default function App() {
   const [user, setUser] = useState(null);
   const [socket, setSocket] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [couple, setCouple] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const autoLoginFunction = async () => {
     const token = await authStorage.getToken();
@@ -26,11 +27,10 @@ export default function App() {
       if (!result.ok) return;
       setUser(result.data.user);
     }
-  };
 
-  const handleLogout = async () => {
-    await authStorage.removeToken();
-    setUser(null);
+    // if (token) {
+    //   loadUser();
+    // }
   };
 
   const getCouple = async () => {
@@ -50,6 +50,7 @@ export default function App() {
   useEffect(() => {
     if (user) {
       getCouple();
+      // loadCouple();
     }
   }, [user]);
 
@@ -74,7 +75,6 @@ export default function App() {
           <LinkSoulmateScreen />
         )}
       </NavigationContainer>
-      {user?.soulmate && <Button title='Logout' onPress={handleLogout} />}
     </AuthContext.Provider>
   );
 }

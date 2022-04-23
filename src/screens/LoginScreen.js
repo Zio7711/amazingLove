@@ -6,13 +6,10 @@ import {
   FormField,
   SubmitButton,
 } from '../components/forms';
+import { Keyboard, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import React, { useContext, useState } from 'react';
 
 import AppScreen from '../components/AppScreen';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import AuthContext from '../../auth/context';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { StyleSheet } from 'react-native';
 import authApi from '../../api/authApi';
 import authStorage from '../../auth/authStorage';
 import useAuth from '../../auth/useAuth';
@@ -45,9 +42,9 @@ const LoginScreen = () => {
   };
 
   return (
-    <AppScreen style={styles.container}>
+    <AppScreen style={styles.container} tom={'123'} onPress={Keyboard.dismiss}>
       {/* <Image style={styles.logo} source={require('../assets/logo-red.png')} /> */}
-      <KeyboardAwareScrollView style={styles.formContainer}>
+      <KeyboardAvoidingView style={styles.formContainer}>
         <Form
           initialValues={{ email: '', password: '' }}
           onSubmit={handleSubmit}
@@ -76,7 +73,7 @@ const LoginScreen = () => {
 
           <SubmitButton title='Login' />
         </Form>
-      </KeyboardAwareScrollView>
+      </KeyboardAvoidingView>
     </AppScreen>
   );
 };

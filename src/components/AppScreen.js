@@ -1,12 +1,20 @@
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import {
+  Keyboard,
+  SafeAreaView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 
 import Constants from 'expo-constants';
 import React from 'react';
 
-function AppScreen({ children, style }) {
+function AppScreen({ children, style, onPress = () => {} }) {
   return (
     <SafeAreaView style={[styles.screen, style]}>
-      <View style={[styles.view, style]}>{children}</View>
+      <TouchableWithoutFeedback onPress={onPress}>
+        <View style={[styles.view, style]}>{children}</View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }

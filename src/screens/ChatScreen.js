@@ -1,6 +1,7 @@
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 
+import AppScreen from '../components/AppScreen';
 import Message from '../components/chatComponents/Message';
 import MessageInput from '../components/chatComponents/MessageInput';
 import messageApi from '../../api/messageApi';
@@ -53,7 +54,7 @@ export default function ChatRoomScreen() {
   // );
 
   return (
-    <SafeAreaView style={styles.page}>
+    <AppScreen style={styles.page}>
       <FlatList
         keyExtractor={(messages) => messages._id}
         data={messages}
@@ -65,7 +66,7 @@ export default function ChatRoomScreen() {
         messages={messages}
         socket={socket}
       />
-    </SafeAreaView>
+    </AppScreen>
   );
 }
 
