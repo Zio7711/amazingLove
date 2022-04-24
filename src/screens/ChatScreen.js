@@ -6,44 +6,31 @@ import AppScreen from "../components/AppScreen";
 import Message from "../components/chatComponents/Message";
 import MessageInput from "../components/chatComponents/MessageInput";
 import messageApi from "../../api/messageApi";
-
-// import useSocket from '../hooks/useSocket';
+import { messageFromSocketReceived } from "../store/messageSlice";
 
 export default function ChatRoomScreen() {
-  const [messages, setMessages] = useState([]);
-
   const { socket } = useSelector((state) => state.global);
 
   const { couple } = useSelector((state) => state.couple);
 
+  const { messages } = useSelector((state) => state.message);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    // socket join room
     if (couple) {
+      // join room with couple id
       socket.emit("join_room", couple._id);
+
+      // get all messages from couple
+      dispatch(messageApi.getMessageByCoupleId(couple._id));
     }
-  }, [couple]);
-
-  // get messages from api
-  const getMessages = async () => {
-    try {
-      // const response = await messageApi.getMessageByUser();
-      const response = await messageApi.getMessageByCoupleId(couple._id);
-      if (!response.ok) return console.warn(response.data.message);
-
-      setMessages(response.data.messages);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (couple) getMessages();
   }, [couple]);
 
   useEffect(() => {
     //set up event listener
     socket.on("receive_messages", (data) => {
-      setMessages((messages) => [data, ...messages]);
+      // setMessages((messages) => [data, ...messages]);
+      dispatch(messageFromSocketReceived(data));
     });
     return () => {
       socket.removeListener("receive_messages");
@@ -58,11 +45,7 @@ export default function ChatRoomScreen() {
         renderItem={({ item }) => <Message message={item} />}
         inverted
       />
-      <MessageInput
-        setMessages={setMessages}
-        messages={messages}
-        socket={socket}
-      />
+      <MessageInput />
     </AppScreen>
   );
 }

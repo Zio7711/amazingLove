@@ -36,8 +36,12 @@ export default function Container() {
   useEffect(() => {
     autoLoginFunction();
 
-    const socketIo = io.connect("http://192.168.0.183:5000");
-    // setSocket(socketIo);
+    // const socketIo = io.connect("http://192.168.0.183:5000");
+    const socketIo = io.connect("http://110.155.19.5:5000");
+    socketIo.on("connect", () => {
+      console.warn("connected to socket");
+    });
+
     dispatch(setSocket(socketIo));
 
     return () => socketIo.disconnect();

@@ -16,16 +16,18 @@ import {
   View,
 } from "react-native";
 import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import messageApi from "../../../api/messageApi";
+import { messageFromSocketReceived } from "../../store/messageSlice";
 import { throttle } from "lodash";
-import { useSelector } from "react-redux";
 
-const MessageInput = ({ setMessages, socket }) => {
+const MessageInput = () => {
   const [message, setMessage] = useState("");
 
-  const { user } = useSelector((state) => state.global);
+  const { user, socket } = useSelector((state) => state.global);
   const { couple } = useSelector((state) => state.couple);
+  const dispatch = useDispatch();
 
   const inputRef = useRef(null);
 
@@ -43,7 +45,8 @@ const MessageInput = ({ setMessages, socket }) => {
       if (!result.ok) return console.warn(result.data.message);
 
       // update messages
-      setMessages((messages) => [result.data.message, ...messages]);
+      // setMessages((messages) => [result.data.message, ...messages]);
+      dispatch(messageFromSocketReceived(result.data.message));
       await socket.emit("send_messages", result.data.message);
     } catch (error) {
       console.warn("error sending message: ", error);

@@ -1,20 +1,23 @@
-import client from './client';
+import client from "./client";
+import { messageReceived } from "../src/store/messageSlice";
 
 const messageURL = {
-  createMessage: '/message/new',
-  getMessageByUser: '/message',
+  createMessage: "/message/new",
+  getMessageByUser: "/message",
 };
 
 const createMessage = (messageInfo) =>
   client.post(messageURL.createMessage, messageInfo);
 
-// get Message by user not used yet
-// const getMessageByUser = () => client.get(messageURL.getMessageByUser);
+// const getMessageByCoupleId = (coupleId) => client.get(`/message/${coupleId}`);
 
-const getMessageByCoupleId = (coupleId) => client.get(`/message/${coupleId}`);
+const getMessageByCoupleId = (coupleId) => ({
+  url: `/message/${coupleId}`,
+  method: "get",
+  onSuccess: messageReceived.type,
+});
 
 export default {
   createMessage,
-  // getMessageByUser,
   getMessageByCoupleId,
 };
