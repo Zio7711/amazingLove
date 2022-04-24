@@ -8,8 +8,10 @@ import {
 } from '../components/forms';
 import { Keyboard, KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import React, { useContext, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppScreen from '../components/AppScreen';
+import { apiCallBegan } from '../store/apiActions';
 import authApi from '../../api/authApi';
 import authStorage from '../../auth/authStorage';
 import useAuth from '../../auth/useAuth';
@@ -22,23 +24,26 @@ const validationSchema = Yup.object().shape({
 const LoginScreen = () => {
   // const [loginFailed, setLoginFailed] = useState(false);
 
-  const { setUser } = useAuth();
+  const dispatch = useDispatch();
+  const globalState = useSelector((state) => state.global);
 
-  const [error, setError] = useState();
+  // const { setUser } = useAuth();
 
   const handleSubmit = async ({ email, password }) => {
-    const result = await authApi.login({ email, password });
-    if (!result.ok) return setError(result.data.message);
+    // const result = await authApi.login({ email, password });
+    dispatch(apiCallBegan(authApi.login({ email, password })));
 
-    setError(null);
-    setUser(result.data.user);
+    // if (!result.ok) return setError(result.data.message);
+
+    // setError(null);
+    // setUser(result.data.user);
 
     // store user in AsyncStorage
-    try {
-      await authStorage.storeToken(result.data.token);
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   await authStorage.storeToken(result.data.token);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -50,7 +55,6 @@ const LoginScreen = () => {
           onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
-          <ErrorMessage error={error} visible={error} />
           <FormField
             autoCapitalize='none'
             autoCorrect={false}

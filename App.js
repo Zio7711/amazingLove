@@ -1,89 +1,11 @@
-// window.navigator.userAgent = 'react-native';
-
-import { Button, StyleSheet, Text, View } from 'react-native';
-import { useEffect, useState } from 'react';
-
-import AppNavigator from './src/navigation/AppNavigator';
-import AuthContext from './auth/context';
-import LinkSoulmateScreen from './src/screens/LinkSoulmateScreen';
-import LoginScreen from './src/screens/LoginScreen';
-import { NavigationContainer } from '@react-navigation/native';
-import authApi from './api/authApi';
-import authStorage from './auth/authStorage';
-import coupleApi from './api/coupleApi';
-import { io } from 'socket.io-client/dist/socket.io';
-import useApi from './src/hooks/useApi';
+import Container from './Container';
+import { Provider } from 'react-redux';
+import store from './src/store/store';
 
 export default function App() {
-  const [user, setUser] = useState(null);
-  const [socket, setSocket] = useState(null);
-  const [couple, setCouple] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const autoLoginFunction = async () => {
-    const token = await authStorage.getToken();
-    if (token) {
-      const result = await authApi.autoLogin();
-      if (!result.ok) return;
-      setUser(result.data.user);
-    }
-
-    // if (token) {
-    //   loadUser();
-    // }
-  };
-
-  const getCouple = async () => {
-    const result = await coupleApi.getCoupleById(user._id);
-    if (!result.ok) return alert(result.data.message);
-    setCouple(result.data.couple);
-  };
-
-  useEffect(() => {
-    autoLoginFunction();
-    const socketIo = io.connect('http://192.168.0.183:5000');
-    setSocket(socketIo);
-
-    return () => socketIo.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      getCouple();
-      // loadCouple();
-    }
-  }, [user]);
-
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        socket,
-        setIsLoading,
-        isLoading,
-        couple,
-        setCouple,
-      }}
-    >
-      <NavigationContainer>
-        {!user ? (
-          <LoginScreen />
-        ) : user.soulmate ? (
-          <AppNavigator />
-        ) : (
-          <LinkSoulmateScreen />
-        )}
-      </NavigationContainer>
-    </AuthContext.Provider>
+    <Provider store={store}>
+      <Container />
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

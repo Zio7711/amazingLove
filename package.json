@@ -16,6 +16,7 @@
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/native-stack": "^6.6.1",
     "@react-navigation/stack": "^6.2.1",
+    "@reduxjs/toolkit": "^1.8.1",
     "apisauce": "^2.1.5",
     "dayjs": "^1.11.1",
     "expo": "~44.0.0",

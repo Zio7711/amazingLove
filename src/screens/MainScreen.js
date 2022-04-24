@@ -7,11 +7,27 @@ import {
   Text,
   View,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MainScreenCenter from '../components/mainScreenComponents/MainScreenCenter';
 import MainScreenIconList from 'components/mainScreenComponents/MainScreenIconList';
+import { apiCallBegan } from '../store/apiActions';
+import { useEffect } from 'react';
 
 const MainScreen = (props) => {
+  // const dispatch = useDispatch();
+  // const test = useSelector((state) => state.user);
+
+  // useEffect(() => {
+  //   dispatch(
+  //     apiCallBegan({
+  //       url: '/auth/autoLogin',
+  //       method: 'get',
+  //       onSuccess: 'user/userReceived',
+  //     })
+  //   );
+  // }, []);
+
   return (
     <>
       <ImageBackground

@@ -5,13 +5,18 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import moment from 'moment';
 import { secondsToDhms } from '../../utils/mainScreenHelper';
 import useAuth from '../../../auth/useAuth';
+import { useSelector } from 'react-redux';
 import userStorage from '../../utils/userStorage';
 
 const MainScreenCenter = () => {
   //loving state in seconds
   const [lovingTime, setLovingTime] = useState(0);
 
-  const { user } = useCallback(useAuth(), []);
+  // const { user } = useCallback(useAuth(), []);
+  const { user } = useCallback(
+    useSelector((state) => state.global),
+    []
+  );
 
   useEffect(() => {
     //calculate loving time
