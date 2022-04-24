@@ -1,23 +1,26 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import AppScreen from '../components/AppScreen';
-import Message from '../components/chatComponents/Message';
-import MessageInput from '../components/chatComponents/MessageInput';
-import messageApi from '../../api/messageApi';
-import useCouple from '../hooks/useCouple';
-import useSocket from '../hooks/useSocket';
+import AppScreen from "../components/AppScreen";
+import Message from "../components/chatComponents/Message";
+import MessageInput from "../components/chatComponents/MessageInput";
+import messageApi from "../../api/messageApi";
+import useCouple from "../hooks/useCouple";
+
+// import useSocket from '../hooks/useSocket';
 
 export default function ChatRoomScreen() {
   const [messages, setMessages] = useState([]);
 
-  const { socket } = useSocket();
+  const { socket } = useSelector((state) => state.global);
+
   const { couple } = useCouple();
 
   useEffect(() => {
     // socket join room
     if (couple) {
-      socket.emit('join_room', couple._id);
+      socket.emit("join_room", couple._id);
     }
   }, [couple]);
 
@@ -40,11 +43,11 @@ export default function ChatRoomScreen() {
 
   useEffect(() => {
     //set up event listener
-    socket.on('receive_messages', (data) => {
+    socket.on("receive_messages", (data) => {
       setMessages((messages) => [data, ...messages]);
     });
     return () => {
-      socket.removeListener('receive_messages');
+      socket.removeListener("receive_messages");
     };
   }, [socket]);
 
@@ -72,7 +75,7 @@ export default function ChatRoomScreen() {
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     flex: 1,
   },
 });

@@ -1,8 +1,8 @@
-import authStorage from '../../auth/authStorage';
-import { createSlice } from '@reduxjs/toolkit';
+import authStorage from "../../auth/authStorage";
+import { createSlice } from "@reduxjs/toolkit";
 
 export const globalSlice = createSlice({
-  name: 'global',
+  name: "global",
   initialState: {
     user: null,
     isLoading: false,
@@ -34,8 +34,7 @@ export const globalSlice = createSlice({
     },
 
     setSocket: (global, action) => {
-      console.log('socket set', action);
-      // global.socket = action.payload;
+      global.socket = action.payload;
     },
   },
 });

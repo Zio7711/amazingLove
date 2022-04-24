@@ -1,19 +1,19 @@
 // window.navigator.userAgent = 'react-native';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
-import AppNavigator from './src/navigation/AppNavigator';
-import AuthContext from './auth/context';
-import LinkSoulmateScreen from './src/screens/LinkSoulmateScreen';
-import LoginScreen from './src/screens/LoginScreen';
-import { NavigationContainer } from '@react-navigation/native';
-import { apiCallBegan } from './src/store/apiActions';
-import authApi from './api/authApi';
-import authStorage from './auth/authStorage';
-import coupleApi from './api/coupleApi';
-import { io } from 'socket.io-client/dist/socket.io';
-import { setSocket } from './src/store/globalSlice';
+import AppNavigator from "./src/navigation/AppNavigator";
+import AuthContext from "./auth/context";
+import LinkSoulmateScreen from "./src/screens/LinkSoulmateScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { apiCallBegan } from "./src/store/apiActions";
+import authApi from "./api/authApi";
+import authStorage from "./auth/authStorage";
+import coupleApi from "./api/coupleApi";
+import { io } from "socket.io-client/dist/socket.io";
+import { setSocket } from "./src/store/globalSlice";
 
 export default function Container() {
   const { user, isLoading } = useSelector((state) => state.global);
@@ -39,10 +39,9 @@ export default function Container() {
   useEffect(() => {
     autoLoginFunction();
 
-    const socketIo = io.connect('http://192.168.0.183:5000');
+    const socketIo = io.connect("http://192.168.0.183:5000");
     // setSocket(socketIo);
-    // dispatch(setSocket(socketIo));
-    console.log(socketIo);
+    dispatch(setSocket(socketIo));
 
     return () => socketIo.disconnect();
   }, []);
@@ -50,7 +49,6 @@ export default function Container() {
   useEffect(() => {
     if (user) {
       getCouple();
-      // loadCouple();
     }
   }, [user]);
 

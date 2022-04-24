@@ -1,12 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from "react-native";
 
-import React from 'react';
-import colors from '../../../config/colors';
-import useAuth from '../../../auth/useAuth.js';
+import React from "react";
+import colors from "../../../config/colors";
+import useAuth from "../../../auth/useAuth.js";
+import { useSelector } from "react-redux";
 
 const Message = ({ message }) => {
   // get current user id from context
-  const { user } = useAuth();
+  const { user } = useSelector((state) => state.global);
 
   // check if message is from current user
   const isMe = user._id === message.sender;
@@ -28,16 +29,16 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     borderRadius: 10,
-    maxWidth: '75%',
+    maxWidth: "75%",
   },
   leftContainer: {
     backgroundColor: colors.primary,
     marginLeft: 10,
-    marginRight: 'auto',
+    marginRight: "auto",
   },
   rightContainer: {
     backgroundColor: colors.secondary,
-    marginLeft: 'auto',
+    marginLeft: "auto",
     marginRight: 10,
   },
 });
