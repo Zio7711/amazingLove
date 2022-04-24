@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from "react-native";
 
 import React from "react";
 import colors from "../../../config/colors";
-import useAuth from "../../../auth/useAuth.js";
 import { useSelector } from "react-redux";
 
 const Message = ({ message }) => {

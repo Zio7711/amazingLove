@@ -1,11 +1,9 @@
-import client from "./client";
+import { coupleReceived } from "../src/store/coupleSlice";
 
-const getCoupleById = (id) => client.get(`/user/couple/${id}`);
-
-// const getCoupleById = (id) =>({
-//     url: `/user/couple/${id}`,
-//     method: "get",
-//     onSuccess: getCoupleByIdSucceeded.type,
-// })
+const getCoupleById = (id) => ({
+  url: `/user/couple/${id}`,
+  method: "get",
+  onSuccess: coupleReceived.type,
+});
 
 export default { getCoupleById };

@@ -4,7 +4,7 @@ import {
   Ionicons,
   MaterialCommunityIcons,
   SimpleLineIcons,
-} from '@expo/vector-icons';
+} from "@expo/vector-icons";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -14,18 +14,18 @@ import {
   Text,
   TextInput,
   View,
-} from 'react-native';
-import React, { useRef, useState } from 'react';
+} from "react-native";
+import React, { useRef, useState } from "react";
 
-import messageApi from '../../../api/messageApi';
-import { throttle } from 'lodash';
-import useAuth from '../../../auth/useAuth';
-import useCouple from '../../hooks/useCouple';
+import messageApi from "../../../api/messageApi";
+import { throttle } from "lodash";
+import { useSelector } from "react-redux";
 
-const MessageInput = ({ setMessages, messages, socket }) => {
-  const [message, setMessage] = useState('');
-  const { user } = useAuth();
-  const { couple } = useCouple();
+const MessageInput = ({ setMessages, socket }) => {
+  const [message, setMessage] = useState("");
+
+  const { user } = useSelector((state) => state.global);
+  const { couple } = useSelector((state) => state.couple);
 
   const inputRef = useRef(null);
 
@@ -44,13 +44,13 @@ const MessageInput = ({ setMessages, messages, socket }) => {
 
       // update messages
       setMessages((messages) => [result.data.message, ...messages]);
-      await socket.emit('send_messages', result.data.message);
+      await socket.emit("send_messages", result.data.message);
     } catch (error) {
-      console.warn('error sending message: ', error);
+      console.warn("error sending message: ", error);
     }
 
     // clear message input
-    setMessage('');
+    setMessage("");
   };
 
   const onPlusClicked = () => {
@@ -68,14 +68,14 @@ const MessageInput = ({ setMessages, messages, socket }) => {
   return (
     <KeyboardAvoidingView
       style={styles.root}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={100}
     >
       <View style={styles.inputContainer}>
         <SimpleLineIcons
-          name='emotsmile'
+          name="emotsmile"
           size={24}
-          color='#595959'
+          color="#595959"
           style={styles.icon}
         />
 
@@ -84,14 +84,14 @@ const MessageInput = ({ setMessages, messages, socket }) => {
           style={styles.input}
           value={message}
           onChangeText={setMessage}
-          placeholder='Signal message...'
+          placeholder="Signal message..."
         />
 
-        <Feather name='camera' size={24} color='#595959' style={styles.icon} />
+        <Feather name="camera" size={24} color="#595959" style={styles.icon} />
         <MaterialCommunityIcons
-          name='microphone-outline'
+          name="microphone-outline"
           size={24}
-          color='#595959'
+          color="#595959"
           style={styles.icon}
         />
       </View>
@@ -100,9 +100,9 @@ const MessageInput = ({ setMessages, messages, socket }) => {
         style={styles.buttonContainer}
       >
         {message ? (
-          <Ionicons name='send' size={18} color='white' />
+          <Ionicons name="send" size={18} color="white" />
         ) : (
-          <AntDesign name='plus' size={24} color='white' />
+          <AntDesign name="plus" size={24} color="white" />
         )}
       </Pressable>
     </KeyboardAvoidingView>
@@ -111,18 +111,18 @@ const MessageInput = ({ setMessages, messages, socket }) => {
 
 const styles = StyleSheet.create({
   root: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 10,
   },
   inputContainer: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: "#f2f2f2",
     flex: 1,
     marginRight: 10,
     borderRadius: 25,
     borderWidth: 1,
-    borderColor: '#dedede',
-    alignItems: 'center',
-    flexDirection: 'row',
+    borderColor: "#dedede",
+    alignItems: "center",
+    flexDirection: "row",
     padding: 5,
   },
   input: {
@@ -135,13 +135,13 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: 40,
     height: 40,
-    backgroundColor: '#3777f0',
+    backgroundColor: "#3777f0",
     borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 35,
   },
 });

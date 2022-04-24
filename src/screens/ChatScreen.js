@@ -6,7 +6,6 @@ import AppScreen from "../components/AppScreen";
 import Message from "../components/chatComponents/Message";
 import MessageInput from "../components/chatComponents/MessageInput";
 import messageApi from "../../api/messageApi";
-import useCouple from "../hooks/useCouple";
 
 // import useSocket from '../hooks/useSocket';
 
@@ -15,7 +14,7 @@ export default function ChatRoomScreen() {
 
   const { socket } = useSelector((state) => state.global);
 
-  const { couple } = useCouple();
+  const { couple } = useSelector((state) => state.couple);
 
   useEffect(() => {
     // socket join room
@@ -50,11 +49,6 @@ export default function ChatRoomScreen() {
       socket.removeListener("receive_messages");
     };
   }, [socket]);
-
-  // sort messages according to message.createdAt
-  // const sortedMessages = messages?.sort(
-  //   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  // );
 
   return (
     <AppScreen style={styles.page}>
