@@ -1,18 +1,16 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import moment from 'moment';
-import { secondsToDhms } from '../../utils/mainScreenHelper';
-import useAuth from '../../../auth/useAuth';
-import { useSelector } from 'react-redux';
-import userStorage from '../../utils/userStorage';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import moment from "moment";
+import { secondsToDhms } from "../../utils/mainScreenHelper";
+import { useSelector } from "react-redux";
+import userStorage from "../../utils/userStorage";
 
 const MainScreenCenter = () => {
   //loving state in seconds
   const [lovingTime, setLovingTime] = useState(0);
 
-  // const { user } = useCallback(useAuth(), []);
   const { user } = useCallback(
     useSelector((state) => state.global),
     []
@@ -22,8 +20,8 @@ const MainScreenCenter = () => {
     //calculate loving time
     const currentTime = moment(new Date(Date.now()));
 
-    const dateWeMet = moment('2021-10-19');
-    const lovingTimeInSeconds = currentTime.diff(dateWeMet, 'seconds');
+    const dateWeMet = moment("2021-10-19");
+    const lovingTimeInSeconds = currentTime.diff(dateWeMet, "seconds");
     setLovingTime(lovingTimeInSeconds);
 
     //set interval to update loving time
@@ -43,7 +41,7 @@ const MainScreenCenter = () => {
       <View style={styles.textContainer}>
         <Text style={styles.name}>
           {user.name}
-          <MaterialCommunityIcons name='heart' size={24} color='red' />{' '}
+          <MaterialCommunityIcons name="heart" size={24} color="red" />{" "}
           {user.soulmate.name}
         </Text>
         <Text style={styles.description}>{displayLovingTime}</Text>
@@ -57,8 +55,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     top: 110,
     right: 0,
   },
