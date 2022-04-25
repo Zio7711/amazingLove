@@ -36,6 +36,17 @@ export const globalSlice = createSlice({
     setSocket: (global, action) => {
       global.socket = action.payload;
     },
+
+    logOut: (global) => {
+      global.user = null;
+      authStorage.removeToken();
+    },
+
+    updateUserWithSoulmateSucceeded: (global, action) => {
+      global.user.soulmate = action.payload.soulmateUser;
+
+      authStorage.storeToken(action.payload.token);
+    },
   },
 });
 
@@ -46,6 +57,8 @@ export const {
   setSocket,
   loginSucceeded,
   autoLoginSucceeded,
+  logOut,
+  updateUserWithSoulmateSucceeded,
 } = globalSlice.actions;
 
 export default globalSlice.reducer;

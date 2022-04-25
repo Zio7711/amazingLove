@@ -7,7 +7,7 @@ export const messageSlice = createSlice({
   },
   reducers: {
     messageReceived: (message, action) => {
-      message.messages.push(action.payload.messages);
+      message.messages = action.payload.messages;
     },
 
     messageFromSocketReceived: (message, action) => {

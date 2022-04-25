@@ -1,8 +1,8 @@
-import { autoLoginSucceeded, loginSucceeded } from "../src/store/globalSlice";
-
-import client from "./client";
-
-const updateUser = (userEmail) => client.patch("/auth/updateUser", userEmail);
+import {
+  autoLoginSucceeded,
+  loginSucceeded,
+  updateUserWithSoulmateSucceeded,
+} from "../src/store/globalSlice";
 
 const login = (userInfo) => ({
   url: "/auth/login",
@@ -14,6 +14,13 @@ const autoLogin = () => ({
   url: "/auth/autoLogin",
   method: "get",
   onSuccess: autoLoginSucceeded.type,
+});
+
+const updateUser = (formData) => ({
+  url: "/auth/updateUser",
+  method: "patch",
+  data: formData,
+  onSuccess: updateUserWithSoulmateSucceeded.type,
 });
 
 export default {
