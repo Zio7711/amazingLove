@@ -1,7 +1,7 @@
-import { apiCallBegan, apiCallFailed, apiCallSucceeded } from '../apiActions';
+import { apiCallBegan, apiCallFailed, apiCallSucceeded } from "../apiActions";
 
-import apiClient from '../../../api/client';
-import { setLoadingState } from '../globalSlice';
+import apiClient from "../../../api/client";
+import { setLoadingState } from "../globalSlice";
 
 const api =
   ({ dispatch }) =>
@@ -18,12 +18,11 @@ const api =
     const result = await apiClient[method](url, data);
 
     // end loading, set it to false
-    dispatch(setLoadingState(false));
 
     if (!result.ok) {
       // dispatch({ type: onError, payload: result.data.message });
 
-      return console.warn('error in api request', result.data.message);
+      return console.warn("error in api request", result.data.message);
     }
 
     //general actions
@@ -31,6 +30,7 @@ const api =
 
     //specific action
     if (onSuccess) dispatch({ type: onSuccess, payload: result.data });
+    dispatch(setLoadingState(false));
   };
 
 export default api;
