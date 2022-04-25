@@ -9,8 +9,10 @@ const ActivityIndicator = ({ visible = false }) => {
   const lottieRef = useRef(null);
 
   useEffect(() => {
-    lottieRef?.current?.play();
-    return () => lottieRef.current?.reset();
+    // not sure why its working, but need to set a timeout
+    setTimeout(() => {
+      lottieRef.current?.play();
+    }, 2);
   }, [visible]);
 
   if (!visible) return null;
@@ -20,7 +22,7 @@ const ActivityIndicator = ({ visible = false }) => {
         ref={lottieRef}
         source={require("../../assets/animations/loading.json")}
         loop
-        autoPlay
+        // autoPlay
       />
     </View>
   );
