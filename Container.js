@@ -28,12 +28,12 @@ export default function Container() {
     const token = await authStorage.getToken();
     // if there is token, auto login
     if (token) {
-      dispatch(apiCallBegan(authApi.autoLogin()));
+      await dispatch(apiCallBegan(authApi.autoLogin()));
     }
   };
 
   useEffect(() => {
-    // autoLoginFunction();
+    autoLoginFunction();
 
     // const socketIo = io.connect("http://192.168.0.183:5000");
     const socketIo = io.connect("http://10.155.19.5:5000");

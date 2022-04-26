@@ -21,6 +21,7 @@ const api =
 
     if (!result.ok) {
       // dispatch({ type: onError, payload: result.data.message });
+      dispatch(setLoadingState(false));
 
       return console.warn("error in api request", result.data.message);
     }
