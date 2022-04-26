@@ -1,4 +1,11 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -30,7 +37,7 @@ export default function ChatRoomScreen() {
   useEffect(() => {
     //set up event listener
     socket.on("receive_messages", (data) => {
-      dispatch(messageFromSocketReceived(data));
+      dispatch(messageFromSocketReceived({ message: data }));
     });
     return () => {
       socket.removeListener("receive_messages");
@@ -52,7 +59,6 @@ export default function ChatRoomScreen() {
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: "white",
     flex: 1,
   },
 });

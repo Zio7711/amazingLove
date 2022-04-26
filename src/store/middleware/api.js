@@ -4,7 +4,7 @@ import apiClient from "../../../api/client";
 import { setLoadingState } from "../globalSlice";
 
 const api =
-  ({ dispatch }) =>
+  ({ dispatch, getState }) =>
   (next) =>
   async (action) => {
     if (action.type !== apiCallBegan.type) return next(action);
@@ -29,7 +29,10 @@ const api =
     // dispatch(apiCallSucceeded(result.data));
 
     //specific action
-    if (onSuccess) dispatch({ type: onSuccess, payload: result.data });
+    //pass socket into next action
+    const socket = getState().global.socket;
+    if (onSuccess)
+      dispatch({ type: onSuccess, payload: { ...result.data, socket } });
     dispatch(setLoadingState(false));
   };
 

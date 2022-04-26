@@ -18,19 +18,25 @@ import {
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import Form from "../forms/Form";
+import FormField from "../forms/FormField";
+import { apiCallBegan } from "../../store/apiActions";
 import messageApi from "../../../api/messageApi";
-import { messageFromSocketReceived } from "../../store/messageSlice";
 import { throttle } from "lodash";
 
 const MessageInput = () => {
+  // state for store message input
   const [message, setMessage] = useState("");
 
-  const { user, socket } = useSelector((state) => state.global);
+  // redux hooks for get state and dispatch actions
+  const { user } = useSelector((state) => state.global);
   const { couple } = useSelector((state) => state.couple);
   const dispatch = useDispatch();
 
+  // input ref for focus
   const inputRef = useRef(null);
 
+  // send message to server
   const sendMessage = async () => {
     const messageObj = {
       content: message,
@@ -41,13 +47,9 @@ const MessageInput = () => {
 
     try {
       // send message
-      const result = await messageApi.createMessage(messageObj);
-      if (!result.ok) return console.warn(result.data.message);
+      dispatch(apiCallBegan(messageApi.createMessage(messageObj)));
 
-      // update messages
-      // setMessages((messages) => [result.data.message, ...messages]);
-      dispatch(messageFromSocketReceived(result.data.message));
-      await socket.emit("send_messages", result.data.message);
+      // socket.emit("send_messages", action.payload.message);
     } catch (error) {
       console.warn("error sending message: ", error);
     }
@@ -56,6 +58,7 @@ const MessageInput = () => {
     setMessage("");
   };
 
+  // focus on input
   const onPlusClicked = () => {
     inputRef.current.focus();
   };
