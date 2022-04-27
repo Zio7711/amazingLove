@@ -4,10 +4,10 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
+} from "react-native";
 
-import Constants from 'expo-constants';
-import React from 'react';
+import Constants from "expo-constants";
+import React from "react";
 
 function AppScreen({ children, style, onPress = () => {} }) {
   return (

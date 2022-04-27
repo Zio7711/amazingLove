@@ -1,6 +1,7 @@
 import AppTabNavigator from "./AppTabNavigator";
 import BucketListNavigator from "./BucketListNavigator";
 import ChatScreen from "../screens/ChatScreen";
+import DairiesScreen from "../screens/DairiesScreen";
 import DatingBucketListScreen from "../screens/DatingBucketListScreen";
 import MapScreen from "../screens/MapScreen";
 import React from "react";
@@ -31,6 +32,14 @@ const AppNavigator = () => {
         name={routes.CHAT}
         component={ChatScreen}
         options={{ title: user.soulmate.name }}
+      />
+
+      <Stack.Screen
+        name={routes.DAIRIES}
+        component={DairiesScreen}
+        options={{
+          presentation: "modal",
+        }}
       />
     </Stack.Navigator>
   );

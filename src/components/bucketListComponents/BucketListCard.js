@@ -1,12 +1,14 @@
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import colors from "../../../config/colors";
 import routes from "../../navigation/routes";
 import { useNavigation } from "@react-navigation/native";
 
 const BucketListCard = ({ item }) => {
-  const { id, title, description, completed, image, location, date } = item;
+  const { id, title, description, isCompleted, image, location, date } = item;
 
   const navigation = useNavigation();
 
@@ -17,7 +19,18 @@ const BucketListCard = ({ item }) => {
       }
     >
       <View style={styles.cardContainer}>
-        <Image source={{ uri: image }} style={styles.image} />
+        {isCompleted ? (
+          <Image source={{ uri: image }} style={styles.image} />
+        ) : (
+          <View style={styles.image}>
+            <MaterialCommunityIcons
+              name="plus-circle"
+              size={60}
+              style={styles.icon}
+              color={colors.primary}
+            />
+          </View>
+        )}
         <Text>{title}</Text>
       </View>
     </TouchableOpacity>
@@ -38,7 +51,10 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "80%",
-    resizeMode: "contain",
+    resizeMode: "cover",
+    borderWidth: 4,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -1,20 +1,30 @@
 import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
 
-import React from "react";
+import BucketListCardCompleted from "./BucketListCardCompleted";
+import BucketListCardNew from "./BucketListCardNew";
+import BucketListCardOnEdit from "./BucketListCardOnEdit";
 
 const BucketListCardDetails = ({ route }) => {
   const item = route.params;
-  const { title, description, completed, image, location, date } = item;
+  const { isCompleted } = item;
+
+  const [isOnEdit, setIsOnEdit] = useState(false);
+
   return (
-    <View style={{ flex: 1 }}>
-      <Image source={{ uri: image }} style={styles.image} />
-      <View style={styles.contentContainer}>
-        <Text>{title}</Text>
-        <Text>{description}</Text>
-        <Text>{date}</Text>
-        <Text>{location}</Text>
-      </View>
-    </View>
+    <>
+      {isOnEdit ? (
+        <BucketListCardOnEdit item={item} />
+      ) : isCompleted ? (
+        <BucketListCardCompleted
+          item={item}
+          setIsOnEdit={setIsOnEdit}
+          isOnEdit={isOnEdit}
+        />
+      ) : (
+        <BucketListCardNew item={item} />
+      )}
+    </>
   );
 };
 
