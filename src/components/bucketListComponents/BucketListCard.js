@@ -1,15 +1,26 @@
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 
 import React from "react";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import routes from "../../navigation/routes";
+import { useNavigation } from "@react-navigation/native";
 
 const BucketListCard = ({ item }) => {
   const { id, title, description, completed, image, location, date } = item;
 
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.cardContainer}>
-      <Image source={{ uri: image }} style={styles.image} />
-      <Text>{title}</Text>
-    </View>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate(routes.DATING_BUCKET_LIST_CARD_DETAILS, item)
+      }
+    >
+      <View style={styles.cardContainer}>
+        <Image source={{ uri: image }} style={styles.image} />
+        <Text>{title}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 
