@@ -1,5 +1,7 @@
 // window.navigator.userAgent = 'react-native';
 
+import * as ImagePicker from "expo-image-picker";
+
 import { StatusBar, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -50,6 +52,17 @@ export default function Container() {
       dispatch(apiCallBegan(coupleApi.getCoupleById(user._id)));
     }
   }, [user]);
+
+  // request permission for camera
+  const requestCameraPermission = async () => {
+    const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!granted)
+      return alert("You do not have permission to access media library");
+  };
+
+  useEffect(() => {
+    requestCameraPermission();
+  }, []);
 
   if (!isReady) {
     return (

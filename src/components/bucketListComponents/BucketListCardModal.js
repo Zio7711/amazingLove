@@ -1,3 +1,5 @@
+import * as ImagePicker from "expo-image-picker";
+
 import {
   Dimensions,
   Image,
@@ -10,17 +12,18 @@ import {
   View,
 } from "react-native";
 import { Form, FormField } from "../forms";
+import React, { useEffect } from "react";
 import { debounce, throttle } from "lodash";
 
 import Button from "../Button";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Modal from "react-native-modal";
-import React from "react";
 import colors from "../../../config/colors";
 import { useState } from "react";
 
 const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
   const { title, description, isCompleted, image, location, date } = item;
+  const [selectedImageUri, setSelectedImageUri] = useState(image);
 
   // create isOnEdit state
   const [isOnEdit, setIsOnEdit] = useState(!isCompleted);
@@ -36,10 +39,24 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
     toggleModal();
   };
 
+  // handle upload image press for edit
+  const selectImage = async () => {
+    // try to get image from camera roll
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.5,
+      });
+      if (!result.cancelled) setSelectedImageUri(result.uri);
+    } catch (error) {
+      console.log("error in selectImage");
+    }
+  };
+
   // below is the jsx for list is completed
   const listIsCompleted = (
     <>
-      <Image source={{ uri: image }} style={styles.image} />
+      <Image source={{ uri: selectedImageUri }} style={styles.image} />
       <View style={styles.contentContainer}>
         <Text>{title}</Text>
         <Text>{description}</Text>
@@ -52,7 +69,6 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
   );
 
   // below is the jsx for list is on Edit
-
   const listIsOnEdit = (
     <Form
       initialValues={{ title, description, image, location, date }}
@@ -68,16 +84,23 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
           />
         </TouchableOpacity>
 
-        {isCompleted ? (
-          <Image source={{ uri: image }} style={styles.imageOnEdit} />
+        {selectedImageUri ? (
+          <TouchableOpacity onPress={selectImage} style={styles.imageOnEdit}>
+            <Image
+              source={{ uri: selectedImageUri }}
+              style={styles.imageOnEdit}
+            />
+          </TouchableOpacity>
         ) : (
           <View style={styles.imageOnEdit}>
-            <MaterialCommunityIcons
-              name="plus-circle"
-              size={60}
-              style={styles.icon}
-              color={colors.primary}
-            />
+            <TouchableOpacity onPress={selectImage}>
+              <MaterialCommunityIcons
+                name="plus-circle"
+                size={60}
+                style={styles.icon}
+                color={colors.primary}
+              />
+            </TouchableOpacity>
           </View>
         )}
 
@@ -90,6 +113,7 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
           />
         </TouchableOpacity>
       </View>
+
       <FormField name="title" icon="tag" placeholder="Please enter the title" />
       <FormField
         name="description"
@@ -152,13 +176,16 @@ const styles = StyleSheet.create({
     height: Dimensions.get("window").height / 1.8,
     alignItems: "center",
     backgroundColor: colors.white,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
   },
 
   // below is for list is on edit
   imageOnEdit: {
     height: "100%",
+    width: "50%",
     flex: 1,
-    resizeMode: "contain",
+    resizeMode: "cover",
     justifyContent: "center",
     alignItems: "center",
   },
