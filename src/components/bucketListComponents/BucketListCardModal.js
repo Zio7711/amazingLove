@@ -16,6 +16,7 @@ import React, { useEffect } from "react";
 import { debounce, throttle } from "lodash";
 
 import Button from "../Button";
+import ImageInput from "./ImageInput";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Modal from "react-native-modal";
 import colors from "../../../config/colors";
@@ -37,20 +38,6 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
 
   const handleCancelEdit = () => {
     toggleModal();
-  };
-
-  // handle upload image press for edit
-  const selectImage = async () => {
-    // try to get image from camera roll
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 0.5,
-      });
-      if (!result.cancelled) setSelectedImageUri(result.uri);
-    } catch (error) {
-      console.log("error in selectImage");
-    }
   };
 
   // below is the jsx for list is completed
@@ -84,25 +71,7 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
           />
         </TouchableOpacity>
 
-        {selectedImageUri ? (
-          <TouchableOpacity onPress={selectImage} style={styles.imageOnEdit}>
-            <Image
-              source={{ uri: selectedImageUri }}
-              style={styles.imageOnEdit}
-            />
-          </TouchableOpacity>
-        ) : (
-          <View style={styles.imageOnEdit}>
-            <TouchableOpacity onPress={selectImage}>
-              <MaterialCommunityIcons
-                name="plus-circle"
-                size={60}
-                style={styles.icon}
-                color={colors.primary}
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+        <ImageInput name="image" />
 
         {/* only when modal is open the save button is pressable */}
         <TouchableOpacity onPress={handleSaveEdit} disabled={!isModalVisible}>
