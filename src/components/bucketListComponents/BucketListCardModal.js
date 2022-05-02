@@ -23,7 +23,7 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
   const { title, description, isCompleted, image, location, date } = item;
 
   // create isOnEdit state
-  const [isOnEdit, setIsOnEdit] = useState(false);
+  const [isOnEdit, setIsOnEdit] = useState(!isCompleted);
 
   const submitBucketListForm = () => {};
 
@@ -119,7 +119,7 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
       //blow is for solve backdrop press flickering
       useNativeDriver
       hideModalContentWhileAnimating
-      onModalHide={() => setIsOnEdit(false)}
+      onModalHide={() => setIsOnEdit(!isCompleted)}
     >
       <KeyboardAvoidingView
         enabled

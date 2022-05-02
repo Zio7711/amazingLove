@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import api from "./middleware/api";
+import bucketListSlice from "./bucketListSlice";
 import coupleSlice from "./coupleSlice";
 import globalSlice from "./globalSlice";
 import messageSlice from "./messageSlice";
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   global: globalSlice,
   couple: coupleSlice,
   message: messageSlice,
+  bucketList: bucketListSlice,
 });
 
 export default configureStore({
