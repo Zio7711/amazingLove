@@ -1,15 +1,16 @@
-import * as ImagePicker from "expo-image-picker";
+import * as ImagePicker from 'expo-image-picker';
 
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import ErrorMessage from "../forms/ErrorMessage";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React from "react";
-import colors from "../../../config/colors";
-import { useFormikContext } from "formik";
+import ErrorMessage from '../forms/ErrorMessage';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
+import colors from '../../../config/colors';
+import { useFormikContext } from 'formik';
 
 const ImageInput = ({ name }) => {
-  const { setFieldValue, errors, touched, values } = useFormikContext();
+  const { setFieldValue, errors, touched, values, handleSubmit } =
+    useFormikContext();
 
   // handle upload image press for edit
   const selectImage = async () => {
@@ -21,7 +22,7 @@ const ImageInput = ({ name }) => {
       });
       if (!result.cancelled) setFieldValue(name, result.uri);
     } catch (error) {
-      console.log("error in selectImage");
+      console.log('error in selectImage');
     }
   };
 
@@ -35,7 +36,7 @@ const ImageInput = ({ name }) => {
         <View style={styles.imageOnEdit}>
           <TouchableOpacity onPress={selectImage}>
             <MaterialCommunityIcons
-              name="plus-circle"
+              name='plus-circle'
               size={60}
               color={colors.primary}
             />
@@ -50,12 +51,12 @@ const ImageInput = ({ name }) => {
 
 const styles = StyleSheet.create({
   imageOnEdit: {
-    height: "100%",
-    width: "50%",
+    height: '100%',
+    width: 200,
     flex: 1,
-    resizeMode: "cover",
-    justifyContent: "center",
-    alignItems: "center",
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

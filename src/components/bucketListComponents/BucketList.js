@@ -1,114 +1,15 @@
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  View,
-} from "react-native";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import BucketListCard from "./BucketListCard";
-import BucketListCardNewModal from "./BucketListCardNewModal";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { apiCallBegan } from "../../store/apiActions";
-import bucketListApi from "../../../api/bucketListApi";
-import { useState } from "react";
+import BucketListCard from './BucketListCard';
+import BucketListCardNewModal from './BucketListCardNewModal';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { apiCallBegan } from '../../store/apiActions';
+import bucketListApi from '../../../api/bucketListApi';
+import { useState } from 'react';
 
 const BucketList = () => {
-  //fake data need to be replaced
-  const fakeData = [
-    {
-      id: "1",
-      title: "Bucket List Item 1",
-      description: "Description of Bucket List Item 1",
-      isCompleted: true,
-      image: "https://picsum.photos/200",
-      location: "Location of Bucket List Item 1",
-      date: "Date of Bucket List Item 1",
-    },
-
-    {
-      id: "2",
-      title: "Bucket List Item 2",
-      description: "Description of Bucket List Item 2",
-      isCompleted: true,
-      image: "https://picsum.photos/200",
-      location: "Location of Bucket List Item 2",
-      date: "Date of Bucket List Item 2",
-    },
-
-    {
-      id: "3",
-      title: "Bucket List Item 3",
-      description: "Description of Bucket List Item 3",
-      isCompleted: true,
-      image: "https://picsum.photos/200",
-      location: "Location of Bucket List Item 3",
-      date: "Date of Bucket List Item 3",
-    },
-
-    {
-      id: "4",
-      title: "Bucket List Item 4",
-      description: "Description of Bucket List Item 4",
-      isCompleted: true,
-      image: "https://picsum.photos/200",
-      location: "Location of Bucket List Item 4",
-      date: "Date of Bucket List Item 4",
-    },
-
-    {
-      id: "5",
-      title: "Bucket List Item 5",
-      description: "Description of Bucket List Item 5",
-      isCompleted: false,
-      image: "https://picsum.photos/200",
-      location: "Location of Bucket List Item 5",
-      date: "Date of Bucket List Item 5",
-    },
-
-    {
-      id: "6",
-      title: "Bucket List Item 6",
-      description: "Description of Bucket List Item 6",
-      isCompleted: false,
-      image: "https://picsum.photos/200",
-      location: "Location of Bucket List Item 6",
-      date: "Date of Bucket List Item 6",
-    },
-
-    {
-      id: "7",
-      title: "Bucket List Item 7",
-      description: "Description of Bucket List Item 7",
-      isCompleted: false,
-      image: "https://picsum.photos/200",
-      location: "Location of Bucket List Item 7",
-      date: "Date of Bucket List Item 7",
-    },
-
-    {
-      id: "8",
-      title: "Bucket List Item 8",
-      description: "Description of Bucket List Item 8",
-      isCompleted: false,
-      image: "https://picsum.photos/200",
-      location: "Location of Bucket List Item 8",
-      date: "Date of Bucket List Item 8",
-    },
-
-    {
-      id: "9",
-      title: "Bucket List Item 9",
-      description: "Description of Bucket List Item 9",
-      isCompleted: false,
-      image: "https://picsum.photos/200",
-      location: "Location of Bucket List Item 9",
-      date: "Date of Bucket List Item 9",
-    },
-  ];
-
   const dispatch = useDispatch();
   const { bucketList } = useSelector((state) => state.bucketList);
   const { couple } = useSelector((state) => state.couple);
@@ -152,14 +53,14 @@ const BucketList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 3,
-    alignItems: "center",
+    alignItems: 'center',
   },
 
   functionSection: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     padding: 10,
-    width: "100%",
+    width: '100%',
   },
 });
 

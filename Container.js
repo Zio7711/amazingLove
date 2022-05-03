@@ -1,24 +1,24 @@
 // window.navigator.userAgent = 'react-native';
 
-import * as ImagePicker from "expo-image-picker";
+import * as ImagePicker from 'expo-image-picker';
 
-import { StatusBar, Text } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { StatusBar, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
-import ActivityIndicator from "./src/components/ActivityIndicator";
-import AppLoading from "expo-app-loading";
-import AppNavigator from "./src/navigation/AppNavigator";
-import LinkSoulmateScreen from "./src/screens/LinkSoulmateScreen";
-import LoginScreen from "./src/screens/LoginScreen";
-import { NavigationContainer } from "@react-navigation/native";
-import { apiCallBegan } from "./src/store/apiActions";
-import authApi from "./api/authApi";
-import authStorage from "./auth/authStorage";
-import coupleApi from "./api/coupleApi";
-import io from "socket.io-client";
-import myTheme from "./src/navigation/navigationTheme";
-import { setSocket } from "./src/store/globalSlice";
+import ActivityIndicator from './src/components/ActivityIndicator';
+import AppLoading from 'expo-app-loading';
+import AppNavigator from './src/navigation/AppNavigator';
+import LinkSoulmateScreen from './src/screens/LinkSoulmateScreen';
+import LoginScreen from './src/screens/LoginScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { apiCallBegan } from './src/store/apiActions';
+import authApi from './api/authApi';
+import authStorage from './auth/authStorage';
+import coupleApi from './api/coupleApi';
+import io from 'socket.io-client';
+import myTheme from './src/navigation/navigationTheme';
+import { setSocket } from './src/store/globalSlice';
 
 // import { io } from "socket.io-client/dist/socket.io";
 
@@ -39,8 +39,8 @@ export default function Container() {
   useEffect(() => {
     autoLoginFunction();
 
-    // const socketIo = io.connect('http://192.168.0.183:5000');
-    const socketIo = io.connect("http://10.155.19.5:5000");
+    const socketIo = io.connect('http://192.168.0.183:5000');
+    // const socketIo = io.connect("http://10.155.19.5:5000");
 
     dispatch(setSocket(socketIo));
 
@@ -57,7 +57,7 @@ export default function Container() {
   const requestCameraPermission = async () => {
     const { granted } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!granted)
-      return alert("You do not have permission to access media library");
+      return alert('You do not have permission to access media library');
   };
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export default function Container() {
         />
       ) : (
         <>
-          <StatusBar barStyle="dark-content" />
+          <StatusBar barStyle='dark-content' />
           <ActivityIndicator visible={isLoading} />
           <NavigationContainer theme={myTheme}>
             {!user ? (
