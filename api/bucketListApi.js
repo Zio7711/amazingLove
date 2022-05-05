@@ -1,10 +1,34 @@
-import { bucketListReceived } from "../src/store/bucketListSlice";
+import {
+  bucketListItemUpdated,
+  bucketListReceived,
+} from '../src/store/bucketListSlice';
 
 // get bucket list by couple id
 const getBucketListByCoupleId = (id) => ({
   url: `/bucketList/${id}`,
-  method: "get",
+  method: 'get',
   onSuccess: bucketListReceived.type,
 });
 
-export default { getBucketListByCoupleId };
+const updateBucketListItemById = (id, data) => {
+  const formData = new FormData();
+  formData.append('description', data.description);
+  formData.append('couple', data.couple);
+  formData.append('location', data.location);
+  formData.append('title', data.title);
+  formData.append('date', data.date);
+
+  formData.append('image', {
+    uri: data.image,
+    type: 'image/jpg',
+    name: 'bucketListImage.jpg',
+  });
+
+  return {
+    url: `/bucketList/${id}`,
+    method: 'put',
+    data: formData,
+    onSuccess: bucketListItemUpdated.type,
+  };
+};
+export default { getBucketListByCoupleId, updateBucketListItemById };

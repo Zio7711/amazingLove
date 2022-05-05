@@ -27,7 +27,7 @@ const ImageInput = ({ name }) => {
   };
 
   return (
-    <>
+    <View style={styles.imageInputContainer}>
       {values[name] ? (
         <TouchableOpacity onPress={selectImage} style={styles.imageOnEdit}>
           <Image source={{ uri: values[name] }} style={styles.imageOnEdit} />
@@ -45,11 +45,14 @@ const ImageInput = ({ name }) => {
       )}
 
       <ErrorMessage error={errors[name]} visible={touched[name]} />
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  imageInputContainer: {
+    flexDirection: 'column',
+  },
   imageOnEdit: {
     height: '100%',
     width: 200,

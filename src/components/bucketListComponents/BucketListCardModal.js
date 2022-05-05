@@ -1,4 +1,4 @@
-import * as ImagePicker from 'expo-image-picker';
+import * as Yup from 'yup';
 
 import {
   Dimensions,
@@ -7,28 +7,43 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import { Form, FormField } from '../forms';
-import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../Button';
-import ImageInput from './ImageInput';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
+import React from 'react';
 import SubmitFormTopSection from './SubmitFormTopSection';
+import { apiCallBegan } from '../../store/apiActions';
+import bucketListApi from '../../../api/bucketListApi';
 import colors from '../../../config/colors';
 import { useState } from 'react';
 
 const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
-  const { title, description, isCompleted, image, location, date } = item;
+  // destruction of the props item (bucket list item)
+  const { _id, title, description, isCompleted, image, location, date } = item;
+  const { couple } = useSelector((state) => state.couple);
+  const dispatch = useDispatch();
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required().label('Title'),
+    description: Yup.string().required().label('Description'),
+    location: Yup.string().required().label('Location'),
+    date: Yup.date().required().label('Date'),
+    image: Yup.string().required().label('Image'),
+  });
 
   // create isOnEdit state
   const [isOnEdit, setIsOnEdit] = useState(!isCompleted);
 
   const submitBucketListForm = (value) => {
-    console.log('value', value);
+    const dataToBeSent = { ...value, couple: couple._id };
+    console.log('value', { ...value, couple: couple._id });
+    dispatch(
+      apiCallBegan(bucketListApi.updateBucketListItemById(_id, dataToBeSent))
+    );
   };
 
   // below is the jsx for list is completed
@@ -51,8 +66,12 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
     <Form
       initialValues={{ title, description, image, location, date }}
       onSubmit={submitBucketListForm}
+      validationSchema={validationSchema}
     >
-      <SubmitFormTopSection isModalVisible={isModalVisible} />
+      <SubmitFormTopSection
+        isModalVisible={isModalVisible}
+        toggleModal={toggleModal}
+      />
 
       <FormField
         name='title'

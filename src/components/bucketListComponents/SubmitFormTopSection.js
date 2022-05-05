@@ -10,12 +10,12 @@ import ImageInput from './ImageInput';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import React from 'react';
 import colors from '../../../config/colors';
+import { useFormikContext } from 'formik';
 
-const SubmitFormTopSection = ({ isModalVisible }) => {
+const SubmitFormTopSection = ({ isModalVisible, toggleModal }) => {
+  const { handleSubmit } = useFormikContext();
+
   // blow are event handler
-  const handleSaveEdit = async () => {
-    toggleModal();
-  };
 
   const handleCancelEdit = () => {
     toggleModal();
@@ -32,7 +32,7 @@ const SubmitFormTopSection = ({ isModalVisible }) => {
       <ImageInput name='image' />
 
       {/* only when modal is open the save button is pressable */}
-      <TouchableOpacity onPress={handleSaveEdit} disabled={!isModalVisible}>
+      <TouchableOpacity onPress={handleSubmit} disabled={!isModalVisible}>
         <MaterialCommunityIcons name='check' size={30} color={colors.primary} />
       </TouchableOpacity>
     </View>
