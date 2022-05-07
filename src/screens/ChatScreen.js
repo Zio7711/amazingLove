@@ -27,10 +27,10 @@ export default function ChatRoomScreen() {
   useEffect(() => {
     if (couple) {
       // join room with couple id
-      socket.emit("join_room", couple._id);
+      socket.emit("join_room", couple.id);
 
       // get all messages from couple
-      dispatch(apiCallBegan(messageApi.getMessageByCoupleId(couple._id)));
+      dispatch(apiCallBegan(messageApi.getMessageByCoupleId(couple.id)));
     }
   }, [couple]);
 
@@ -47,7 +47,7 @@ export default function ChatRoomScreen() {
   return (
     <AppScreen style={styles.page}>
       <FlatList
-        keyExtractor={(messages) => messages._id}
+        keyExtractor={(messages) => messages.id}
         data={messages}
         renderItem={({ item }) => <Message message={item} />}
         inverted

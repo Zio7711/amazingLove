@@ -49,7 +49,7 @@ export default function Container() {
 
   useEffect(() => {
     if (user) {
-      dispatch(apiCallBegan(coupleApi.getCoupleById(user._id)));
+      dispatch(apiCallBegan(coupleApi.getCoupleById(user.id)));
     }
   }, [user]);
 

@@ -121,7 +121,7 @@ const BucketList = () => {
 
   useEffect(() => {
     //get bucket list by couple id
-    dispatch(apiCallBegan(bucketListApi.getBucketListByCoupleId(couple._id)));
+    dispatch(apiCallBegan(bucketListApi.getBucketListByCoupleId(couple.id)));
   }, []);
 
   return (
@@ -137,7 +137,7 @@ const BucketList = () => {
         style={styles.list}
         data={bucketList}
         renderItem={({ item }) => <BucketListCard item={item} />}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item.id}
         numColumns={3}
       />
 
