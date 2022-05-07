@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import LottieView from "lottie-react-native";
+import LottieView from 'lottie-react-native';
 
 const ActivityIndicator = ({ visible = false }) => {
   // for phones that do not support autoplay
@@ -20,7 +20,7 @@ const ActivityIndicator = ({ visible = false }) => {
     <View style={styles.overlay}>
       <LottieView
         ref={lottieRef}
-        source={require("../../assets/animations/loading.json")}
+        source={require('../../assets/animations/loading.json')}
         loop
         // autoPlay
       />
@@ -30,11 +30,12 @@ const ActivityIndicator = ({ visible = false }) => {
 
 const styles = StyleSheet.create({
   overlay: {
-    position: "absolute",
-    backgroundColor: "rgba(0,0,0,0.5)",
-    height: "100%",
-    width: "100%",
-    zIndex: 100,
+    position: 'absolute',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    elevation: 1,
   },
 });
 
