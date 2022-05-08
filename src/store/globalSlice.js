@@ -10,9 +10,9 @@ export const globalSlice = createSlice({
   },
 
   reducers: {
-    userReceived: (global, action) => {
-      global.user = action.payload;
-    },
+    // userReceived: (global, action) => {
+    //   global.user = action.payload;
+    // },
 
     setLoadingState: (global, action) => {
       global.isLoading = action.payload;
@@ -45,6 +45,7 @@ export const globalSlice = createSlice({
     updateUserWithSoulmateSucceeded: (global, action) => {
       global.user.soulmate = action.payload.soulmateUser;
 
+      // store token
       authStorage.storeToken(action.payload.token);
     },
   },
@@ -52,7 +53,6 @@ export const globalSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-  userReceived,
   setLoadingState,
   setSocket,
   loginSucceeded,

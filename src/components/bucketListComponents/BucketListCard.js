@@ -6,9 +6,11 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import colors from "../../../config/colors";
 import { useState } from "react";
+import useToken from "../../hooks/useToken";
 
 const BucketListCard = ({ item }) => {
-  const { title, isCompleted, image } = item;
+  const { title, isCompleted, imageURL } = item;
+  const authToken = useToken();
 
   // state for list card details modal
   const [isModalVisible, setModalVisible] = useState(false);
@@ -22,7 +24,15 @@ const BucketListCard = ({ item }) => {
       <TouchableOpacity onPress={toggleModal} disabled={isModalVisible}>
         <View style={styles.cardContainer}>
           {isCompleted ? (
-            <Image source={{ uri: image }} style={styles.image} />
+            <Image
+              source={{
+                uri: imageURL,
+                headers: {
+                  Authorization: `Bearer ${authToken}`,
+                },
+              }}
+              style={styles.image}
+            />
           ) : (
             <View style={styles.image}>
               <MaterialCommunityIcons

@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 export const bucketList = createSlice({
-  name: 'bucketList',
+  name: "bucketList",
   initialState: {
     bucketList: [],
   },
@@ -12,13 +12,12 @@ export const bucketList = createSlice({
     },
 
     bucketListItemUpdated: (bucketList, action) => {
-      const bucketListItem = action.payload.bucketListItem;
-      console.log('bucketListItem', bucketListItem);
-      // const bucketListItemIndex = bucketList.bucketList.findIndex(
-      //   (bucketListItemInList) =>
-      //     bucketListItemInList._id === bucketListItem._id
-      // );
-      // bucketList.bucketList[bucketListItemIndex] = bucketListItem;
+      const bucketListItem = action.payload.bucketListItemUpdated;
+
+      const bucketListItemIndex = bucketList.bucketList.findIndex(
+        (bucketListItemInList) => bucketListItemInList.id === bucketListItem.id
+      );
+      bucketList.bucketList[bucketListItemIndex] = bucketListItem;
     },
   },
 });

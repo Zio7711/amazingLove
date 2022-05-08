@@ -9,7 +9,7 @@ const Message = ({ message }) => {
   const { user } = useSelector((state) => state.global);
 
   // check if message is from current user
-  const isMe = user.id === message.sender;
+  const isMe = user.id === message.senderId;
 
   return (
     <View

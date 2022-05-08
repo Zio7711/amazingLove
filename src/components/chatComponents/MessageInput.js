@@ -40,9 +40,9 @@ const MessageInput = () => {
   const sendMessage = async () => {
     const messageObj = {
       content: message,
-      sender: user.id,
-      receiver: user.soulmate.id,
-      couple: couple.id,
+      senderId: user.id,
+      receiverId: user.soulmate.id,
+      coupleId: couple.id,
     };
 
     try {

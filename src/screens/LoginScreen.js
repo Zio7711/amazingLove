@@ -27,20 +27,7 @@ const LoginScreen = () => {
   const globalState = useSelector((state) => state.global);
 
   const handleSubmit = async ({ email, password }) => {
-    // const result = await authApi.login({ email, password });
     dispatch(apiCallBegan(authApi.login({ email, password })));
-
-    // if (!result.ok) return setError(result.data.message);
-
-    // setError(null);
-    // setUser(result.data.user);
-
-    // store user in AsyncStorage
-    // try {
-    //   await authStorage.storeToken(result.data.token);
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   return (
