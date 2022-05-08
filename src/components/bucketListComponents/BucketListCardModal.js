@@ -29,12 +29,29 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
   const { couple } = useSelector((state) => state.couple);
   const dispatch = useDispatch();
 
+  // when fetching data from the server, the field value might be null,
+  // so in the validation schema, we need to add custom type Error message
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required().label("Title"),
-    description: Yup.string().required().label("Description"),
-    location: Yup.string().required().label("Location"),
-    date: Yup.date().required().label("Date"),
-    image: Yup.string().required().label("Image"),
+    title: Yup.string()
+      .required()
+      .label("Title")
+      .typeError("Title is required"),
+    description: Yup.string()
+      .required()
+      .label("Description")
+      .typeError("Description is required"),
+    location: Yup.string()
+      .required()
+      .label("Location")
+      .typeError("Location is required"),
+    date: Yup.date()
+      .required()
+      .label("Date")
+      .typeError("Please enter a valid date"),
+    image: Yup.string()
+      .required()
+      .label("Image")
+      .typeError("Image is required"),
   });
 
   // create isOnEdit state
@@ -43,7 +60,6 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
 
   const submitBucketListForm = (value, { resetForm }) => {
     const dataToBeSent = { ...value, coupleId: couple.id, isCompleted: true };
-    // console.warn("value", { ...value, coupleId: couple.id });
 
     dispatch(
       apiCallBegan(bucketListApi.updateBucketListItemById(id, dataToBeSent))
@@ -54,6 +70,7 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
   };
 
   // below is the jsx for list is completed
+  // todo: check loading indicator source, currently not working
   const listIsCompleted = (
     <>
       <Image
@@ -62,6 +79,11 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
+        }}
+        loadingIndicatorSource={{
+          uri: "https://picsum.photos/200/300",
+          width: 200,
+          height: 200,
         }}
         style={styles.image}
       />
@@ -84,6 +106,7 @@ const BucketListCardModal = ({ item, toggleModal, isModalVisible }) => {
       validationSchema={validationSchema}
     >
       <SubmitFormTopSection
+        id={id}
         isModalVisible={isModalVisible}
         toggleModal={toggleModal}
       />

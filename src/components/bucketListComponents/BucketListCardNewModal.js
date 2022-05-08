@@ -1,15 +1,32 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import * as Yup from "yup";
 
-import Modal from 'react-native-modal';
-import React from 'react';
-import TextInput from '../TextInput';
-import colors from '../../../config/colors';
+import { Button, Dimensions, StyleSheet, Text, View } from "react-native";
+import { Form, FormField, SubmitButton } from "../forms";
+import { useDispatch, useSelector } from "react-redux";
+
+import Modal from "react-native-modal";
+import React from "react";
+import { apiCallBegan } from "../../store/apiActions";
+import bucketListApi from "../../../api/bucketListApi";
+import colors from "../../../config/colors";
 
 const BucketListCardNewModal = ({ isModalVisible, toggleModal }) => {
+  const dispatch = useDispatch();
+  const { couple } = useSelector((state) => state.couple);
+  const submitNewBucketListForm = (value) => {
+    const dataToBeSent = { ...value, coupleId: couple.id };
+    dispatch(apiCallBegan(bucketListApi.createNewBucketListItem(dataToBeSent)));
+    toggleModal();
+  };
+
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required().label("Title"),
+  });
+
   return (
     <Modal
       isVisible={isModalVisible}
-      swipeDirection='down'
+      swipeDirection="down"
       onSwipeComplete={toggleModal}
       style={styles.modal}
       onBackdropPress={toggleModal}
@@ -18,7 +35,19 @@ const BucketListCardNewModal = ({ isModalVisible, toggleModal }) => {
       hideModalContentWhileAnimating
     >
       <View style={styles.container}>
-        <TextInput icon='tag' placeholder='Title of your story' />
+        <Form
+          initialValues={{ title: "" }}
+          onSubmit={submitNewBucketListForm}
+          validationSchema={validationSchema}
+        >
+          <FormField
+            name="title"
+            icon="tag"
+            placeholder="Please enter the title"
+          />
+
+          <SubmitButton title="Add" />
+        </Form>
       </View>
     </Modal>
   );
@@ -26,16 +55,16 @@ const BucketListCardNewModal = ({ isModalVisible, toggleModal }) => {
 
 const styles = StyleSheet.create({
   modal: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   container: {
-    // height: 150,
+    height: 150,
     // width: 300,
-    // backgroundColor: colors.white,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: colors.white,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

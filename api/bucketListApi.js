@@ -1,4 +1,6 @@
 import {
+  bucketListItemAdded,
+  bucketListItemDeleted,
   bucketListItemUpdated,
   bucketListReceived,
 } from "../src/store/bucketListSlice";
@@ -10,14 +12,21 @@ const getBucketListByCoupleId = (id) => ({
   onSuccess: bucketListReceived.type,
 });
 
+const createNewBucketListItem = (data) => ({
+  url: "/bucketList/new",
+  method: "post",
+  data,
+  onSuccess: bucketListItemAdded.type,
+});
+
 const updateBucketListItemById = (id, data) => {
   const formData = new FormData();
-  formData.append("description", data.description);
-  formData.append("coupleId", data.coupleId);
-  formData.append("location", data.location);
-  formData.append("title", data.title);
-  formData.append("date", data.date);
-  formData.append("isCompleted", data.isCompleted);
+  // loop through the data object
+  // if the key is not image , then add it to the formData
+  Object.keys(data).forEach((key) => {
+    if (key === "image") return;
+    formData.append(key, data[key]);
+  });
 
   formData.append("image", {
     uri: data.image,
@@ -32,4 +41,16 @@ const updateBucketListItemById = (id, data) => {
     onSuccess: bucketListItemUpdated.type,
   };
 };
-export default { getBucketListByCoupleId, updateBucketListItemById };
+
+const deleteBucketListItemById = (id) => ({
+  url: `/bucketList/${id}`,
+  method: "delete",
+  onSuccess: bucketListItemDeleted.type,
+});
+
+export default {
+  getBucketListByCoupleId,
+  updateBucketListItemById,
+  createNewBucketListItem,
+  deleteBucketListItemById,
+};
